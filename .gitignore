@@ -92,3 +92,7 @@ Desktop.ini
 # Linux
 .*
 !.gitignore
+
+# GitHub workflows (keep these tracked)
+!.github/
+.github/**/
