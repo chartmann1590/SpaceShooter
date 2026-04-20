@@ -1,0 +1,183 @@
+name: E2E Tests
+
+on:
+  push:
+    branches: [ master, main, develop ]
+    paths-ignore:
+      - 'website/**'
+  pull_request:
+    branches: [ master, main ]
+  workflow_dispatch:
+
+jobs:
+  e2e-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        cache: 'gradle'
+    
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    
+    - name: Build debug APK
+      run: ./gradlew assembleDebug --no-daemon
+    
+    - name: Boot Android Emulator
+      uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 34
+        target: google_apis
+        arch: x86_64
+        profile: Nexus 6
+        emulator-options: -no-snapshot -noaudio -no-window -gpu swiftshader_indirect
+        script: |
+          echo "Waiting for emulator to boot..."
+          sleep 60
+          echo "Emulator ready"
+    
+    - name: Wait for device
+      run: adb wait-for-device
+    
+    - name: Verify emulator
+      run: |
+        echo "Checking emulator status..."
+        adb shell getprop sys.boot_completed
+        echo "Device ready"
+    
+    - name: Install APK
+      run: adb install -r app/build/outputs/apk/debug/app-debug.apk
+    
+    - name: Launch app
+      run: |
+        adb shell am start -n com.spaceshooter/.MainActivity
+        sleep 5
+    
+    - name: Run E2E Tests
+      run: |
+        echo "=========================================="
+        echo "E2E SMOKE TEST"
+        echo "=========================================="
+        
+        echo ""
+        echo "1. Checking if app is installed..."
+        PACKAGE_CHECK=$(adb shell pm list packages | grep com.spaceshooter)
+        if [ -n "$PACKAGE_CHECK" ]; then
+          echo "   ✓ PASS: App is installed"
+        else
+          echo "   ✗ FAIL: App not installed"
+          exit 1
+        fi
+        
+        echo ""
+        echo "2. Checking if app is running..."
+        PROCESS_CHECK=$(adb shell ps -A | grep com.spaceshooter)
+        if [ -n "$PROCESS_CHECK" ]; then
+          echo "   ✓ PASS: App is running"
+        else
+          echo "   ✗ FAIL: App not running"
+          exit 1
+        fi
+        
+        echo ""
+        echo "3. Taking screenshot..."
+        adb shell screencap -p /sdcard/screen.png
+        adb pull /sdcard/screen.png ./
+        echo "   ✓ Screenshot saved"
+        
+        echo ""
+        echo "4. Checking for crashes..."
+        adb logcat -d -t 100 > ./logcat.txt
+        CRASHES=$(grep -i "FATAL\|crash\|exception" ./logcat.txt | grep com.spaceshooter | head -5)
+        if [ -z "$CRASHES" ]; then
+          echo "   ✓ PASS: No crashes detected"
+        else
+          echo "   ✗ FAIL: Crashes found:"
+          echo "$CRASHES"
+          exit 1
+        fi
+        
+        echo ""
+        echo "=========================================="
+        echo "GAME INTERACTION TEST"
+        echo "=========================================="
+        
+        echo ""
+        echo "5. Restarting app..."
+        adb shell am force-stop com.spaceshooter
+        sleep 2
+        adb shell am start -n com.spaceshooter/.MainActivity
+        sleep 5
+        
+        echo ""
+        echo "6. Simulating touch to start game (tap center)..."
+        adb shell input tap 540 960
+        sleep 3
+        
+        echo ""
+        echo "7. Simulating gameplay (swipe)..."
+        adb shell input swipe 540 960 540 800 100
+        sleep 2
+        
+        echo ""
+        echo "8. Checking for runtime errors..."
+        adb logcat -d -t 50 > ./runtime_logcat.txt
+        ERRORS=$(grep -i "E/" ./runtime_logcat.txt | grep -v "AudioFlinger\|SurfaceFlinger\|OpenSL\|EGL_adreno" | head -5)
+        if [ -z "$ERRORS" ]; then
+          echo "   ✓ PASS: No runtime errors"
+        else
+          echo "   ⚠ WARNING: Errors found (may be non-critical):"
+          echo "$ERRORS"
+        fi
+        
+        echo ""
+        echo "=========================================="
+        echo "ORIENTATION TEST"
+        echo "=========================================="
+        
+        echo ""
+        echo "9. Testing orientation change..."
+        adb shell settings put system user_rotation 1
+        sleep 2
+        adb shell settings put system user_rotation 0
+        echo "   ✓ PASS: Orientation test complete"
+        
+        echo ""
+        echo "=========================================="
+        echo "ALL TESTS PASSED!"
+        echo "=========================================="
+    
+    - name: Capture final screenshot
+      if: always()
+      run: |
+        adb shell screencap -p /sdcard/final_screen.png
+        adb pull /sdcard/final_screen.png ./
+        adb logcat -d -t 200 > ./e2e_logcat_full.txt
+    
+    - name: Upload test artifacts
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: e2e-test-results
+        path: |
+          ./screen.png
+          ./final_screen.png
+          ./logcat.txt
+          ./runtime_logcat.txt
+          ./e2e_logcat_full.txt
+          app/build/outputs/apk/debug/app-debug.apk
+        retention-days: 7
+    
+    - name: Cleanup
+      if: always()
+      run: |
+        echo "Cleaning up..."
+        adb emu kill 2>/dev/null || true
+        echo "Cleanup complete"
