@@ -18,6 +18,9 @@ out/
 .gradle/
 build/
 
+# Gradle wrapper JAR (required for CI)
+!gradle/wrapper/gradle-wrapper.jar
+
 # Local configuration file (sdk path, etc)
 local.properties
 
