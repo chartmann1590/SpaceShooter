@@ -6,8 +6,6 @@ on:
   pull_request:
     branches: [ master, main ]
   workflow_dispatch:
-  release:
-    types: [published]
 
 env:
   JAVA_VERSION: '17'
@@ -79,12 +77,11 @@ jobs:
         fi
 
   # =========================================
-  # JOB 2: E2E Tests (manual only to avoid timeout issues)
+  # JOB 2: E2E Tests (automatic on macOS)
   # =========================================
   e2e-tests:
     needs: build
     runs-on: macos-latest
-    if: github.event_name == 'workflow_dispatch'
     
     steps:
     - name: Checkout
@@ -102,7 +99,7 @@ jobs:
         target: google_apis
         arch: x86_64
         profile: Nexus 6
-        emulator-options: -no-snapshot -noaudio -no-window -gpu swiftshader_indirect
+        emulator-options: -no-snapshot -noaudio -no-window
         script: |
           echo "Waiting for emulator to boot..."
           sleep 60
