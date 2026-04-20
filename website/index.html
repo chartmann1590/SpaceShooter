@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Space Shooter - Android Arcade Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Animated Star Background -->
+    <div class="star-field" id="starField"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">🚀</span>
+                <span class="logo-text">SPACE SHOOTER</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#enemies">Enemies</a></li>
+                <li><a href="#powerups">Power-Ups</a></li>
+                <li><a href="#screenshots">Screenshots</a></li>
+                <li><a href="#download" class="btn-nav">Download</a></li>
+            </ul>
+            <button class="mobile-menu" id="mobileMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-line">SPACE</span>
+                <span class="title-line accent">SHOOTER</span>
+            </h1>
+            <p class="hero-subtitle">An Arcade Space Shooter for Android</p>
+            <div class="hero-features">
+                <div class="feature-tag">10 Levels</div>
+                <div class="feature-tag">Boss Battles</div>
+                <div class="feature-tag">7 Enemy Types</div>
+                <div class="feature-tag">15 Achievements</div>
+            </div>
+            <div class="hero-cta">
+                <a href="#download" class="btn btn-primary">
+                    <span>Download APK</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 4v16m0 0l-6-6m6 6l6-6"/>
+                    </svg>
+                </a>
+                <a href="#screenshots" class="btn btn-secondary">View Screenshots</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="ship-preview">
+                <svg viewBox="0 0 100 120" class="ship-svg">
+                    <defs>
+                        <linearGradient id="shipGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#64b5f6"/>
+                            <stop offset="50%" style="stop-color:#42a5f5"/>
+                            <stop offset="100%" style="stop-color:#1e88e5"/>
+                        </linearGradient>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                    <path d="M50 10 L80 50 L70 110 L50 90 L30 110 L20 50 Z" 
+                          fill="url(#shipGradient)" filter="url(#glow)"/>
+                    <circle cx="50" cy="35" r="8" fill="#e3f2fd"/>
+                    <circle cx="50" cy="35" r="4" fill="#1976d2"/>
+                </svg>
+                <div class="ship-glow"></div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 5v14m0 0l-6-6m6 6l6-6"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section features" id="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">What's Inside</span>
+                <h2>Game Features</h2>
+                <p>Action-packed gameplay with tons of features to master</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-aos="fade-up">
+                    <div class="feature-icon">🎮</div>
+                    <h3>10 Levels</h3>
+                    <p>Progress through increasingly challenging levels, each culminating in an epic boss battle</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon">👾</div>
+                    <h3>7 Enemy Types</h3>
+                    <p>From fast scouts to regenerating healers, each enemy type has unique behavior</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon">⚡</div>
+                    <h3>5 Weapons</h3>
+                    <p>Normal, Spread, Laser, Homing missiles, and Plasma orbs - switch between them</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon">🏆</div>
+                    <h3>15 Achievements</h3>
+                    <p>Unlock achievements as you play - from first blood to defeating the final boss</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon">💫</div>
+                    <h3>Combo System</h3>
+                    <p>Chain kills within 2 seconds for score multipliers up to 8x</p>
+                </div>
+                <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-icon">🔥</div>
+                    <h3>Boss Battles</h3>
+                    <p>Multi-phase bosses with enrage mode - survive their increasingly deadly attacks</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enemies Section -->
+    <section class="section enemies" id="enemies">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Watch Out!</span>
+                <h2>Enemy Types</h2>
+                <p>Each enemy has unique behavior and requires different strategies</p>
+            </div>
+            <div class="enemies-showcase">
+                <div class="enemy-card enemy-scout">
+                    <div class="enemy-visual">
+                        <svg viewBox="0 0 60 60">
+                            <path d="M30 5 L55 30 L45 55 L30 45 L15 55 L5 30 Z" fill="#ff6b6b"/>
+                            <circle cx="30" cy="25" r="6" fill="#fff"/>
+                        </svg>
+                    </div>
+                    <h4>Scout</h4>
+                    <p class="enemy-points">100 pts</p>
+                    <span class="enemy-behavior">Fast zigzag movement</span>
+                </div>
+                <div class="enemy-card enemy-fighter">
+                    <div class="enemy-visual">
+                        <svg viewBox="0 0 60 60">
+                            <path d="M30 5 L55 30 L45 55 L30 45 L15 55 L5 30 Z" fill="#ffa726"/>
+                            <circle cx="30" cy="25" r="6" fill="#fff"/>
+                        </svg>
+                    </div>
+                    <h4>Fighter</h4>
+                    <p class="enemy-points">200 pts</p>
+                    <span class="enemy-behavior">Standard shooter</span>
+                </div>
+                <div class="enemy-card enemy-tank">
+                    <div class="enemy-visual">
+                        <svg viewBox="0 0 60 60">
+                            <path d="M30 5 L55 30 L45 55 L30 45 L15 55 L5 30 Z" fill="#9c27b0"/>
+                            <circle cx="30" cy="25" r="6" fill="#fff"/>
+                        </svg>
+                    </div>
+                    <h4>Tank</h4>
+                    <p class="enemy-points">300 pts</p>
+                    <span class="enemy-behavior">High HP, slow movement</span>
+                </div>
+                <div class="enemy-card enemy-bomber">
+                    <div class="enemy-visual">
+                        <svg viewBox="0 0 60 60">
+                            <path d="M30 5 L55 30 L45 55 L30 45 L15 55 L5 30 Z" fill="#78909c"/>
+                            <circle cx="30" cy="25" r="6" fill="#fff"/>
+                        </svg>
+                    </div>
+                    <h4>Bomber</h4>
+                    <p class="enemy-points">250 pts</p>
+                    <span class="enemy-behavior">Circular movement</span>
+                </div>
+                <div class="enemy-card enemy-chaser">
+                    <div class="enemy-visual">
+                        <svg viewBox="0 0 60 60">
+                            <path d="M30 5 L55 30 L45 55 L30 45 L15 55 L5 30 Z" fill="#e040fb"/>
+                            <circle cx="30" cy="25" r="6" fill="#fff"/>
+                        </svg>
+                    </div>
+                    <h4>Chaser</h4>
+                    <p class="enemy-points">250 pts</p>
+                    <span class="enemy-behavior">Tracks player position</span>
+                </div>
+                <div class="enemy-card enemy-splitter">
+                    <div class="enemy-visual">
+                        <svg viewBox="0 0 60 60">
+                            <path d="M30 5 L55 30 L45 55 L30 45 L15 55 L5 30 Z" fill="#ff4081"/>
+                            <circle cx="30" cy="25" r="6" fill="#fff"/>
+                        </svg>
+                    </div>
+                    <h4>Splitter</h4>
+                    <p class="enemy-points">400 pts</p>
+                    <span class="enemy-behavior">Splits when damaged</span>
+                </div>
+                <div class="enemy-card enemy-healer">
+                    <div class="enemy-visual">
+                        <svg viewBox="0 0 60 60">
+                            <path d="M30 5 L55 30 L45 55 L30 45 L15 55 L5 30 Z" fill="#69f0ae"/>
+                            <circle cx="30" cy="25" r="6" fill="#fff"/>
+                        </svg>
+                    </div>
+                    <h4>Healer</h4>
+                    <p class="enemy-points">350 pts</p>
+                    <span class="enemy-behavior">Regenerates health</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Boss Section -->
+    <section class="section boss-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">The Big Fight</span>
+                <h2>Boss Battles</h2>
+                <p>Each level ends with an epic boss fight</p>
+            </div>
+            <div class="boss-info">
+                <div class="boss-phases">
+                    <div class="phase-card phase-1">
+                        <div class="phase-number">1</div>
+                        <h4>Phase 1</h4>
+                        <p>Basic attacks, single bullet patterns</p>
+                    </div>
+                    <div class="phase-card phase-2">
+                        <div class="phase-number">2</div>
+                        <h4>Phase 2</h4>
+                        <p>Faster movement, spawns minions</p>
+                    </div>
+                    <div class="phase-card phase-3">
+                        <div class="phase-number">3</div>
+                        <h4>Phase 3</h4>
+                        <p>Laser beam attack, spiral bullets</p>
+                    </div>
+                    <div class="phase-card phase-enrage">
+                        <div class="phase-number">!</div>
+                        <h4>Enrage</h4>
+                        <p>10% HP - Double damage, faster attacks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Power-Ups Section -->
+    <section class="section powerups" id="powerups">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Power Up!</span>
+                <h2>Power-Ups</h2>
+                <p>Collect these power-ups to gain advantages</p>
+            </div>
+            <div class="powerups-grid">
+                <div class="powerup-card" style="--powerup-color: #4caf50;">
+                    <div class="powerup-icon">💚</div>
+                    <h4>Health+</h4>
+                    <p>Restore 30 HP</p>
+                </div>
+                <div class="powerup-card" style="--powerup-color: #00bcd4;">
+                    <div class="powerup-icon">💙</div>
+                    <h4>Multi-Shot</h4>
+                    <p>+1 projectile</p>
+                </div>
+                <div class="powerup-card" style="--powerup-color: #2196f3;">
+                    <div class="powerup-icon">💎</div>
+                    <h4>Shield x3</h4>
+                    <p>3-hit damage shield</p>
+                </div>
+                <div class="powerup-card" style="--powerup-color: #ffeb3b;">
+                    <div class="powerup-icon">💛</div>
+                    <h4>Bomb</h4>
+                    <p>Clear all enemies</p>
+                </div>
+                <div class="powerup-card" style="--powerup-color: #e91e63;">
+                    <div class="powerup-icon">💗</div>
+                    <h4>Rapid Fire</h4>
+                    <p>Faster shooting</p>
+                </div>
+                <div class="powerup-card" style="--powerup-color: #ff69b4;">
+                    <div class="powerup-icon">🔮</div>
+                    <h4>Laser</h4>
+                    <p>Continuous beam</p>
+                </div>
+                <div class="powerup-card" style="--powerup-color: #ff9800;">
+                    <div class="powerup-icon">💣</div>
+                    <h4>Nuke</h4>
+                    <p>Screen explosion</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Controls Section -->
+    <section class="section controls-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">How to Play</span>
+                <h2>Controls</h2>
+            </div>
+            <div class="controls-grid">
+                <div class="control-card">
+                    <div class="control-icon">👆</div>
+                    <h4>Move</h4>
+                    <p>Touch and drag</p>
+                </div>
+                <div class="control-card">
+                    <div class="control-icon">🔫</div>
+                    <h4>Shoot</h4>
+                    <p>Automatic when touching</p>
+                </div>
+                <div class="control-card">
+                    <div class="control-icon">⚡</div>
+                    <h4>Dash</h4>
+                    <p>Double-tap quickly</p>
+                </div>
+                <div class="control-card">
+                    <div class="control-icon">💣</div>
+                    <h4>Nuke</h4>
+                    <p>Double-tap top-right</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="section screenshots" id="screenshots">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">See It in Action</span>
+                <h2>Screenshots</h2>
+                <p>Gameplay screenshots from the actual game</p>
+            </div>
+            <div class="screenshots-gallery">
+                <div class="screenshot-item">
+                    <img src="gameplay1.png" alt="Space Shooter Menu" loading="lazy">
+                    <div class="screenshot-overlay">
+                        <span>Main Menu</span>
+                    </div>
+                </div>
+                <div class="screenshot-item">
+                    <img src="gameplay2.png" alt="Space Shooter Gameplay" loading="lazy">
+                    <div class="screenshot-overlay">
+                        <span>Gameplay</span>
+                    </div>
+                </div>
+                <div class="screenshot-item">
+                    <img src="gameplay3.png" alt="Space Shooter Boss Battle" loading="lazy">
+                    <div class="screenshot-overlay">
+                        <span>Boss Battle</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section class="section download" id="download">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Get Started</span>
+                <h2>Download</h2>
+                <p>Install the game on your Android device</p>
+            </div>
+            <div class="download-content">
+                <div class="download-info">
+                    <div class="download-badge">
+                        <span class="version">v1.4</span>
+                        <span class="size">~5 MB</span>
+                    </div>
+                    <ul class="download-features">
+                        <li>✓ Android 7.0+</li>
+                        <li>✓ No permissions required</li>
+                        <li>✓ Offline playable</li>
+                        <li>✓ Works on phones & tablets</li>
+                    </ul>
+                </div>
+                <div class="download-actions">
+                    <a href="app-debug.apk" class="btn btn-download" download>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 4v16m0 0l-6-6m6 6l6-6"/>
+                        </svg>
+                        Download APK
+                    </a>
+                    <a href="https://github.com/space-shooter-game" class="btn btn-github" target="_blank">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                        View Source on GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">🚀</span>
+                    <span class="logo-text">SPACE SHOOTER</span>
+                    <p>An arcade space shooter game for Android</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#enemies">Enemies</a></li>
+                        <li><a href="#powerups">Power-Ups</a></li>
+                        <li><a href="#screenshots">Screenshots</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/space-shooter-game" target="_blank">GitHub</a></li>
+                        <li><a href="app-debug.apk" download>Download APK</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Space Shooter. Open source game project.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
